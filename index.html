@@ -1,23 +1,96 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<head>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+	<style>
+		.ng-hide:not(.ng-hide-animate) {
+			/* this is just another form of hiding an element */
+			display: block!important;
+			position: absolute;
+			top: -9999px;
+		}
+		.animate-show {
+		  line-height: 20px;
+		  opacity: 1;
+		  padding: 10px;
+		  background: white;
+		  transition: all linear 0.5s;
+		}
+
+		.animate-show.ng-hide-add,
+		.animate-show.ng-hide-remove {
+		  transition: all linear 0.5s;
+		}
+
+		.animate-show.ng-hide {
+		  line-height: 0;
+		  opacity: 0;
+		  padding: 0 10px;
+		  transition: all linear 0.5s;
+		}
+		.question-block {
+			margin:20px;
+			padding:20px;
+			border: 1px solid #eee;
+		}
+	</style>
+</head>
 <body>
 
 	<div ng-app="myApp" ng-controller="myCtrl">
 	
-		<p><b>JOBS:</b></p>	
-		<select ng-model="selectedJob" ng-options="job.title for job in jobs track by job.id">
-		</select>
-
-		<p>JOB ID: {{ selectedJob.occupationListId }}</p>				
-		<p>JOB TITLE: {{ selectedJob.title }}</p>				
-		
-		<p><b>OCCUPATIONS FOR THIS JOB ID:</b></p>	
-		
-		<select ng-model="selectedOccupation" ng-options="x for x in occupations[selectedJob.occupationListId-1].list">
-		</select>
-		
-		<p>SELECTED OCCUPATION: {{ selectedOccupation }}</p>	
+		<div class="question-block first-block">
+			<p><b>Select your job:</b></p>	
+			<select ng-model="selectedJob" ng-options="job.title for job in jobs track by job.id">
+			</select>		
+		</div>
+		<div class="question-block second-block animate-show" ng-show1="selectedJob">
+			<p><b>Select your occupation:</b></p>	
+			
+			<select ng-model="selectedOccupation" ng-options="x for x in occupations[selectedJob.occupationListId-1].list">
+			</select>						
+		</div>
+		<div class="question-block third-block animate-show" ng-show1="selectedOccupation">
+			<p><b>Are you claiming for other expenses of your employment such as: professional and union subscriptions, professional registrations, tools and equipment?:</b></p>	
+			
+			<input ng-model="selectedOtherExpenses" type="radio" name="otherExpenses" value="yes">Yes<Br>
+			<input ng-model="selectedOtherExpenses" type="radio" name="otherExpenses" value="no">No<Br>						
+			
+			 <p><b>Enter an estimate of how much you spend on these things in a year: &#163;</b> <input type="text" size="10"></p>
+		</div>
+		<div class="question-block fourth-block animate-show" ng-show1="selectedOtherExpenses">
+			<p><b>Do you or your accountant already prepare a self assessment tax return?</b></p>	
+			
+			<input ng-model="selectedPrepare" type="radio" name="prepare" value="yes">Yes<Br>
+			<input ng-model="selectedPrepare" type="radio" name="prepare" value="no">No<Br>						
+		</div>
+		<div class="question-block fifth-block animate-show" ng-show1="selectedPrepare">
+			<p><b>Select your tax years</b></p>
+			<br>Tick the years when you were employed in the specified sector
+			<br><input type="checkbox" ng-model="taxYears[0]" name="taxYears" value="2012">6 Apr 2012 to 5 Apr 2013<Br>
+			<input type="checkbox" ng-model="taxYears[1]" name="taxYears" value="2013">6 Apr 2013 to 5 Apr 2014<Br>
+			<input type="checkbox" ng-model="taxYears[2]" name="taxYears" value="2014">6 Apr 2014 to 5 Apr 2015<Br> 
+			<input type="checkbox" ng-model="taxYears[3]" name="taxYears" value="2015">6 Apr 2015 to 5 Apr 2016</p>
+		</div>
+		<div class="question-block sixth-block animate-show" ng-show="taxYears">
+			<p><b>About You</b></p>
+			<br>Title: 
+			<select name="title">
+				<option selected="selected" value="">Please select</option>
+				<option value="Mr">Mr</option>
+				<option value="Mrs">Mrs</option>
+				<option value="Miss">Miss</option>
+				<option value="Ms">Ms</option>
+				<option value="Dr">Dr</option>
+			</select>
+			<p><b>First name(s):</b> <input type="text" size="10"></p>
+			<p><b>Surname:</b> <input type="text" size="10"></p>
+			<p><b>Email:</b> <input type="email" size="10"></p>
+			<p><b>Repeat email:</b> <input type="email" size="10"></p>			
+			
+			<input type="radio" name="cashbackBonus" value="yes"> I’d like to claim my £5 cashback signup bonus at UniformBenefits.com, I agree that my details will be passed to selected 3rd parties.<Br>
+			<input type="radio" name="cashbackBonus" value="no"> I don't want to receive my £5 cashback signup bonus, no details will be passed to 3rd parties><Br>		
+		</div>
 	</div>
 
 	<script>
@@ -160,7 +233,16 @@
 									"Coopers not providing their own tools, labourers, polishers and upholsterers.",
 									"All other workers."]}
 				];  
+				 
+
+				 var selectedTaxYears = false;
+
+				 $scope.$watch('taxYears', function() {
+					alert();
+				}, true);
 		});
+		
+  
 	</script>
 </body>
 </html>
