@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<body>
+
+	<div ng-app="myApp" ng-controller="myCtrl">
+	
+		<p><b>JOBS:</b></p>	
+		<select ng-model="selectedJob" ng-options="job.title for job in jobs track by job.id">
+		</select>
+
+		<p>JOB ID: {{ selectedJob.occupationListId }}</p>				
+		<p>JOB TITLE: {{ selectedJob.title }}</p>				
+		
+		<p><b>OCCUPATIONS FOR THIS JOB ID:</b></p>	
+		
+		<select ng-model="selectedOccupation" ng-options="x for x in occupations[selectedJob.occupationListId-1].list">
+		</select>
+		
+		<p>SELECTED OCCUPATION: {{ selectedOccupation }}</p>	
+	</div>
+
+	<script>
+		var app = angular.module('myApp', []);
+		app.controller('myCtrl', function($scope) {
+			$scope.jobs =  [
+				  {id: '0', title: 'Agriculture', occupationListId: '1'},
+				  {id: '1', title: 'Airlines', occupationListId: '2'},
+				  {id: '2', title: 'Aluminium', occupationListId: '3'},
+				  {id: '3', title: 'Armed Forces', occupationListId: '4'},
+				  {id: '4', title: 'ALL OTHER UNIFORMED WORKERS NOT LISTED HERE', occupationListId: '1'},
+				  {id: '5', title: 'Banks and Building Societes', occupationListId: '5'},
+				  {id: '6', title: 'Brass and Copper', occupationListId: '6'},
+				  {id: '7', title: 'Building', occupationListId: '7'},
+				  {id: '8', title: 'Building Materials', occupationListId: '8'},
+				  {id: '9', title: 'Clothing', occupationListId: '9'},
+				  {id: '10', title: 'Constructional Engineering', occupationListId: '10'},
+				  {id: '11', title: 'Electrical and electricity Supply', occupationListId: '11'},
+				  {id: '12', title: 'Fire Service', occupationListId: '12'},
+				  {id: '13', title: 'Food', occupationListId: '1'},
+				  {id: '14', title: 'Forestry', occupationListId: '1'},
+				  {id: '15', title: 'Glass', occupationListId: '1'},
+				  {id: '16', title: 'Hairdressing - all uniformed workers', occupationListId: '1'},
+				  {id: '17', title: 'Healthcare staff in the National Health Service, private hospitals and nursing homes', occupationListId: '13'},
+				  {id: '18', title: 'Heating', occupationListId: '14'},
+				  {id: '19', title: "I don't wear protective clothing or uniform", occupationListId: '0'},
+				  {id: '20', title: 'Iron and Steel', occupationListId: '15'},
+				  {id: '21', title: 'Iron Mining', occupationListId: '16'},
+				  {id: '22', title: 'Kitchen staff - all uniformed workers', occupationListId: '1'},
+				  {id: '23', title: 'Leather', occupationListId: '17'},
+				  {id: '24', title: 'Particular Engineering', occupationListId: '18'},
+				  {id: '25', title: 'Police Force', occupationListId: '19'},
+				  {id: '26', title: 'Postal Services', occupationListId: '20'},
+				  {id: '27', title: 'Precious Metals', occupationListId: '1'},
+				  {id: '28', title: 'Printing', occupationListId: '21'},
+				  {id: '29', title: 'Prisons', occupationListId: '22'},
+				  {id: '30', title: "Public Service: Public Transport", occupationListId: '23'},
+				  {id: '31', title: 'Public Service: Docks and Inland Waterways', occupationListId: '24'},
+				  {id: '32', title: 'Quarrying', occupationListId: '1'},
+				  {id: '33', title: 'Railways', occupationListId: '25'},
+				  {id: '34', title: 'Retail - all uniformed workers', occupationListId: '1'},
+				  {id: '35', title: 'Seamen', occupationListId: '26'},
+				  {id: '36', title: 'Security industry - all uniformed workers', occupationListId: '1'},
+				  {id: '37', title: 'Shipyards', occupationListId: '27'},
+				  {id: '38', title: 'Textiles and Textile Printing', occupationListId: '28'},
+				  {id: '39', title: 'Trades ancilliary to engineering', occupationListId: '29'},
+				  {id: '40', title: 'Vehicles', occupationListId: '30'},
+				  {id: '41', title: 'Wood and Furniture', occupationListId: '31'}
+				];
+				
+			  $scope.occupations =  [
+				  {id: '1', list: ["All workers"]},
+				  {id: '2', list: [	"Pilots and co-pilots: see EIM50050. Basic FRE £1,022 FRE plus £110 travel allowance per EIM50060.", 
+									"Cabin crew. No nationally agreed rate. In the absence of a suitable locally agreed rate propose using Unite locally agreed rate of £720 per annum",
+									"Other employees"]},
+				  {id: '3', list: [	"Continual casting operators, process operators, de-dimplers, driers, drill punchers, dross unloaders, firemen, furnace operators and their helpers, leaders, mould-men, pourers, remelt department labourers and roll flatteners.", 
+									"Cable hands, case makers, labourers, mates, truck drivers and measurers and storekeepers.",
+									"Apprentices.",
+									"All other workers."]},
+				  {id: '4', list: [	"Royal Navy", 
+									"Army",
+									"Royal Marines",
+									"Royal Airforce"]},
+				  {id: '5', list: [	"Uniformed doormen and messengers."]},
+				  {id: '6', list: [	"Braziers, coppersmiths, finishers, fitters, moulders, turners and all other workers."]},
+				  {id: '7', list: [	"Joiners and carpenters.", 
+									"Cement works, roofing felt and asphalt labourers.",
+									"Labourers and navvies.",
+									"All other workers."]},
+				  {id: '8', list: [	"Stone masons.",
+									"Tilemakers and labourers.",
+									"All other workers."]},
+				  {id: '9', list: [	"Lacemakers, hosiery bleachers, dyers, scourers and knitters, knitwear bleachers and dyers.",
+									"All other workers."]},
+				  {id: '10', list: [ "Blacksmiths and their strikers, burners, caulkers, chippers, drillers, erectors, fitters, holders up, markers off, platers, riggers, riveters, rivet heaters, scaffolders, sheeters, template workers, turners and welders.", 
+									"Banksmen, labourers, shop-helpers, slewers and straighteners.",
+									"Apprentices and storekeepers.",
+									"All other workers."]},
+				  {id: '11', list: [ "Those workers incurring laundry costs only.", 
+									"All other workers."]},
+				  {id: '12', list: ["Uniformed fire fighters and fire officers."]},
+				  {id: '13', list: [ "Ambulance staff on active service", 
+									"Nurses, midwives, dental nurses, auxillaries, nursing assistants, healthcare assistants, care workers and similar. £100 allowance plus £12 shoes and £6 socks/tights allowances.",
+									"Chiropodists, occupational, speech, physiotherapists & other therapists, phlebotomists & radiographers.",
+									"Plaster room orderlies, hospital porters, ward clerks, sterile supply workers, hospital domestics & hospital catering staff.", 
+									"Laboratory staff, pharmacists & pharmacy assistants.",
+									"Uniformed ancillary staff: maintenance workers, grounds staff, drivers, parking attendants & security guards, receptionists & other uniformed staff.", 
+									"Nurse or similar claiming shoe and tights/sock allowance but not uniform laundry",
+									"Doctors and surgeons",]},
+				  {id: '14', list: [ "Pipe fitters and plumbers.",
+									"Coverers, laggers, domestic glaziers, heating engineers and all their mates.",
+									"All gas workers and all other workers."]},
+				  {id: '15', list: [ "Day labourers, general labourers, stockmen, timekeepers, warehouse staff and weighmen.",
+									"Apprentices.",
+									"All other workers."]},
+				  {id: '16', list: [ "Fillers, miners and underground workers.",
+									"All other workers."]},
+				  {id: '17', list: [ "Curriers (wet workers), fellmongering workers and tanning operatives (wet).",
+									"All other workers."]},
+				  {id: '18', list: [ "Pattern makers.", 
+									"Chainmakers; cleaners, galvanisers, tinners and wire drawers in the wire drawing industry and toolmakers in the lock making industry.",
+									"Apprentices and storekeepers.",
+									"All other workers."]},
+				  {id: '19', list: [ "Police officers (ranks up to and including Chief Inspector).",
+									"Community support officers, and other police employees: see EIM68130"]},
+				  {id: '20', list: [ "Postal staff. No nationally agreed rate, propose using locally agreed rate"]},
+				  {id: '21', list: [ "Letterpress Section-electrical engineers (rotary presses), electrotypers, ink and roller makers, machine minders (rotary), maintenance engineers (rotary presses) and stereotypers.",
+									"Bench hands (periodical and bookbinding section), compositors (letterpress section), readers (letterpress section) telecommunications and electronic section wire room operators, warehousemen (paper box making section).",
+									"All other workers."]},
+				  {id: '22', list: [ "Uniformed prison officers."]},
+				  {id: '23', list: [ "Garage hands including cleaners.",
+									"Conductors and drivers."]},
+				  {id: '24', list: [ "Dockers, dredger drivers and hopper steerers.",
+									"All other workers.",
+									"Third Choice"]},
+				  {id: '25', list: ["See the appropriate category for craftsmen (for example engineers, vehicles, etc.). All other workers."]},
+				  {id: '26', list: [ "Carpenters. a. Passenger liners.",
+									"Cargo vessels, tankers, coasters and ferries."]},
+				  {id: '27', list: [ "Blacksmiths and their strikers, boilermakers, burners, carpenters, caulkers, drillers, furnacemen (platers) holders up, fitters, platers, plumbers, riveters, sheet iron workers, shipwrights, tubers and welders.", 
+									"Labourers.",
+									"Apprentices and storekeepers.",
+									"All other workers."]},
+				  {id: '28', list: [ "Carders, carding engineers, overlookers and technicians in spinning mills.",
+									"All other workers."]},
+				  {id: '29', list: [ "Pattern makers.", 
+									"Labourers, supervisory and unskilled workers.",
+									"Apprentices and storekeepers.",
+									"Motor mechanics in garage repair shop.",
+									"All other workers."]},
+				  {id: '29', list: [ "Pattern makers.", 
+									"Labourers, supervisory and unskilled workers.",
+									"Apprentices and storekeepers.",
+									"Motor mechanics in garage repair shop.",
+									"All other workers."]},
+				  {id: '30', list: [ "Builders, railway vehicle repairers and railway wagon lifters.",
+									"Railway vehicle painters, letterers, and builders’ and repairers’ assistants.",
+									"All other workers."]},
+				  {id: '31', list: [ "Carpenters, cabinetmakers, joiners, wood carvers and woodcutting machinists.",
+									"Artificial limb makers (other than in wood), organ builders and packaging case makers.",
+									"Coopers not providing their own tools, labourers, polishers and upholsterers.",
+									"All other workers."]}
+				];  
+		});
+	</script>
+</body>
+</html>
+
