@@ -1,0 +1,41 @@
+/* Main CSS */
+
+.question-block {
+	margin:20px;
+	padding:20px;
+	border: 1px solid #eee;
+}
+
+#second-page,
+#third-page,
+#thank-you-message {
+	display:none;
+}
+
+/* Angular Animate */
+
+.ng-hide:not(.ng-hide-animate) {
+	/* this is just another form of hiding an element */
+	display: block!important;
+	position: absolute;
+	top: -9999px;
+}
+.animate-show {
+  line-height: 20px;
+  opacity: 1;
+  padding: 10px;
+  background: white;
+  transition: all linear 0.5s;
+}
+
+.animate-show.ng-hide-add,
+.animate-show.ng-hide-remove {
+  transition: all linear 0.5s;
+}
+
+.animate-show.ng-hide {
+  line-height: 0;
+  opacity: 0;
+  padding: 0 10px;
+  transition: all linear 0.5s;
+}

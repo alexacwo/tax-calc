@@ -1,388 +1,603 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
-<head>
-	
-	<style>
-		.ng-hide:not(.ng-hide-animate) {
-			/* this is just another form of hiding an element */
-			display: block!important;
-			position: absolute;
-			top: -9999px;
-		}
-		.animate-show {
-		  line-height: 20px;
-		  opacity: 1;
-		  padding: 10px;
-		  background: white;
-		  transition: all linear 0.5s;
-		}
-
-		.animate-show.ng-hide-add,
-		.animate-show.ng-hide-remove {
-		  transition: all linear 0.5s;
-		}
-
-		.animate-show.ng-hide {
-		  line-height: 0;
-		  opacity: 0;
-		  padding: 0 10px;
-		  transition: all linear 0.5s;
-		}
-		.question-block {
-			margin:20px;
-			padding:20px;
-			border: 1px solid #eee;
-		}
-	</style>
+<head>	
+	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+	<link rel="stylesheet" href="css/base.css" type="text/css">
+	<link rel="stylesheet" href="css/fresh-green.css" type="text/css">
+	<link rel="stylesheet" href="css/style-frontend.css" type="text/css">
+	<link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
-<body>
-	<div ng-app="myApp" ng-controller="myCtrl">
-		<form id="tax-form" name="myForm" action="download.php" method="post">
-		
-			<br>Estimated tax rebate amount: {{occupations[selectedJob.occupationListId-1].amounts[selectedIndex] + ownExpenses}}
-			<input type="hidden" name="estimatedAmount" value="{{occupations[selectedJob.occupationListId-1].amounts[selectedIndex] + ownExpenses}}">
-				
-			<div class="question-block first-block">
-				<h3>
-					<strong>Select your job</strong>
-				</h3>
-				<p>If you can't find your job sector listed, please use the “All other uniformed workers” or “I don't wear a uniform or protective clothing” category.</p>
-				<select ng-model="selectedJob" ng-change="onJobChange({{$index}})" name="selectedJob" ng-options="job.title for job in jobs track by job.title">
-				</select>
-			</div>
-			<div class="question-block second-block animate-show" ng-show="selectedJob">
-				<p><b>Select your occupation:</b></p>
-				<div ng-repeat="(key, value) in occupations[selectedJob.occupationListId-1].titles">
-					<input type="radio" ng-model="$parent.selectedOccupation" ng-change="onOccupationChange({{$index}})" name="selectedOccupation" value="{{value}}" required />
-					<label>{{value}}</label>					 
+<body id="top">
+	<div class="container">
+		<main class="template-page content  av-content-small alpha units" role="main" itemprop="mainContentOfPage" style="73%;">
+			<article class="post-entry post-entry-type-page post-entry-320" itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
+				<div class="entry-content-wrapper clearfix">
+					<header class="entry-content-header">
+					</header>
+					
+					<div class="entry-content" itemprop="text">
+					
+						<div class="ezfc-wrapper ezfc-form-1 ezfc-theme-fresh-green ezfc-grid-6" ng-app="myApp" ng-controller="myCtrl">
+							<form id="taxform" name="taxform" action="download.php" method="post">
+							
+								<section id="first-page">
+									<div class="ezfc-element">
+										<label class="ezfc-label">
+											Estimated Tax Relief Obtainable
+										</label>
+										
+										<div class="ezfc-price-wrapper">
+											<span class="ezfc-price">
+												<span class="ezfc-price-currency ezfc-price-currency-before">&#163;</span>
+												<span class="ezfc-price-value" count-to="{{occupations[selectedJob.occupationsListId-1].amounts[selectedIndex] + ownExpenses}}" value="0" duration="1.5"></span> 
+											</span>
+										</div>									
+										
+										<input type="hidden" name="estimatedAmount" value="{{occupations[selectedJob.occupationsListId-1].amounts[selectedIndex] + ownExpenses}}">
+										
+									</div>
+									
+									<div class="ezfc-step ezfc-step-start ezfc-step-active">
+										<div class="ezfc-element ezfc-custom-element ezfc-column ezfc-col-6 ezfc-element-wrapper-html">
+											<div>
+												<h3>
+													<strong>Select your job</strong>
+												</h3>
+
+												<p>If you can't find your job sector listed, please use the "All other uniformed workers" or "I don't wear a uniform or protective clothing" category.</p>
+												
+											</div>										
+											
+											<div class="ezfc-element ezfc-custom-element ezfc-column ezfc-col-6 ezfc-element-wrapper-dropdown">
+												<select class=" ezfc-element ezfc-element-select" ng-model="selectedJob" ng-change="onJobChange({{$index}})" name="selectedJob" ng-options="job.title for job in jobs track by job.title">
+												</select>
+											</div>
+										</div>									
+										
+										<div class="ezfc-element ezfc-custom-element ezfc-column ezfc-col-6 ezfc-element-wrapper-html animate-show" ng-show="selectedJob">
+											<h3>
+												Select your occupation:
+											</h3>
+											
+											<div class="ezfc-element-radio-container">
+												<div ng-repeat="(key, value) in occupations[selectedJob.occupationsListId-1].titles">
+													<div class="ezfc-element-radio">
+														<input id="occupation-{{key}}" class="ezfc-element-radio-input" type="radio" ng-model="$parent.selectedOccupation" ng-change="onOccupationChange({{$index}})" name="selectedOccupation" value="{{value}}" required />
+														<label class="ezfc-addon-label" for="occupation-{{key}}"></label>
+													</div><div class="ezfc-element-radio-text">
+														<label for="occupation-{{key}}">{{value}}</label>
+													</div>
+													<div class="ezfc-element-radio-clear"></div>
+												</div>
+											</div>
+											
+										</div>
+										
+										<div class="ezfc-element ezfc-custom-element ezfc-column ezfc-col-6 ezfc-element-wrapper-html animate-show" ng-show="selectedOccupation">
+											<h3>
+												Are you claiming for other expenses of your employment such as: professional and union subscriptions, professional registrations, tools and equipment?:
+											</h3>
+											
+											<div class="ezfc-element-radio-container">
+												<input ng-model="selectedOtherExpenses" type="radio" name="otherExpenses" value="yes">Yes<Br>
+												<input ng-model="selectedOtherExpenses" type="radio" name="otherExpenses" value="no">No<Br>
+												
+												<div class="ezfc-element ezfc-custom-element ezfc-column ezfc-col-6 ezfc-element-wrapper-numbers ezfc-fade-in" ng-show="selectedOtherExpensesYes">
+													<label class="ezfc-label" for="estimatedExpenses">
+														Enter an estimate of how much you spend on these things per year <span class="ezfc-required-char">*</span>
+													</label>
+														
+													<input class="ezfc-element ezfc-element-numbers" id="estimatedExpenses" placeholder="&#163;" ng-model="ownExpenses" name="estimatedExpenses" type="number"  style="width: 240px;" required="">
+												</div>
+											</div>
+											
+										</div>
+										
+										<div class="ezfc-element ezfc-custom-element ezfc-column ezfc-col-6 ezfc-element-wrapper-html animate-show" ng-show="selectedOtherExpenses">
+											<h3>
+												Do you or your accountant already prepare a self assessment tax return?
+											</h3>
+											
+											<div class="ezfc-element-radio-container">											
+												<input ng-model="selectedPrepare" type="radio" name="prepare" value="yes">Yes<Br>
+												<input ng-model="selectedPrepare" type="radio" name="prepare" value="no">No<Br>
+											</div>
+											
+										</div>
+										
+										<div class="ezfc-element ezfc-custom-element ezfc-column ezfc-col-6 ezfc-element-wrapper-html animate-show" ng-show="selectedPrepareShow">
+											<h3>
+												Are you claiming for previous tax years?
+											</h3>
+											
+											<div class="ezfc-element ezfc-custom-element ezfc-column ezfc-col-6 ezfc-element-wrapper-checkbox">
+												<label class="ezfc-label">Please Select:</label>
+												
+												<div class="ezfc-element-checkbox-container">
+													<div class="ezfc-element-checkbox">
+														<input class="ezfc-element-checkbox-input" type="checkbox" id="2012-taxyear" ng-model="taxYears[0]" name="taxYears[0]" value="2012">
+														<label for="2012-taxyear">6 Apr 2012 to 5 Apr 2013</label>
+														<div class="ezfc-element-checkbox-clear"></div>
+													</div>
+												</div>
+												<div class="ezfc-element-checkbox-container">
+													<div class="ezfc-element-checkbox">
+														<input class="ezfc-element-checkbox-input" type="checkbox" id="2013-taxyear" ng-model="taxYears[1]" name="taxYears[1]" value="2013">
+														<label for="2013-taxyear">6 Apr 2013 to 5 Apr 2014</label>
+														<div class="ezfc-element-checkbox-clear"></div>
+													</div>
+												</div>
+												<div class="ezfc-element-checkbox-container">
+													<div class="ezfc-element-checkbox">
+														<input class="ezfc-element-checkbox-input" type="checkbox" id="2014-taxyear" ng-model="taxYears[2]" name="taxYears[2]" value="2014">
+														<label for="2014-taxyear">6 Apr 2014 to 5 Apr 2015</label>
+														<div class="ezfc-element-checkbox-clear"></div>
+													</div>
+												</div>
+												<div class="ezfc-element-checkbox-container">
+													<div class="ezfc-element-checkbox">
+														<input class="ezfc-element-checkbox-input" type="checkbox" id="2015-taxyear" ng-model="taxYears[3]" name="taxYears[3]" value="2015">
+														<label for="2015-taxyear">6 Apr 2015 to 5 Apr 2016</label>
+														<div class="ezfc-element-checkbox-clear"></div>
+													</div>
+												</div>
+											</div>
+											
+										</div>
+										
+										<button id="firstPageProceedButton" ng-show="selectedTaxYears && !selectedPrepareHide">PROCEED > </button>
+										
+										<div class="ezfc-element ezfc-custom-element ezfc-column ezfc-col-6 ezfc-element-wrapper-html animate-show" ng-show="selectedPrepareHide">
+											<h3 style="color:red;">
+												Sorry, this service is not available for self employed clients.
+											</h3>
+										</div>	
+									</section>
+									
+									<section id="second-page">
+									
+										<div class="ezfc-element ezfc-custom-element ezfc-column ezfc-col-6 ezfc-element-wrapper-html animate-show">
+											
+											<h3>About You</h3>
+											
+											<br>Title:
+											<select ng-model="selectedTitle" name="selectedTitle">
+												<option selected="selected" value="">Please select</option>
+												<option value="Mr">Mr</option>
+												<option value="Mrs">Mrs</option>
+												<option value="Miss">Miss</option>
+												<option value="Ms">Ms</option>
+												<option value="Dr">Dr</option>
+											</select>
+											<p><b>First name(s):</b> <input ng-model="selectedFirstName" name="selectedFirstName" type="text" size="10"></p>
+											<p><b>Surname:</b> <input ng-model="selectedSurname" name="selectedSurname" type="text" size="10"></p>
+											<p><b>Email:</b> <input ng-model="selectedEmail" name="selectedEmail" type="email" size="10" required></p>
+											<p><b>Repeat email:</b> <input ng-model="selectedConfirmedEmail" name="selectedConfirmedEmail" type="email" size="10"></p>										
+											<br>
+											<span class="error" style="color:red;" ng-show="taxform.$error.email">
+												E-mail is not valid
+											</span>
+											<span class="error" style="color:red;" ng-hide="validEmail">
+												E-mail isn't the same
+											</span>
+											
+											<h3>Your home address:</h3>
+											
+											<br>Postcode: <input ng-model="selectedPostcode" name="selectedPostcode" type="text" size="10">
+											<br>Address: <input ng-model="selectedAddressFirstline" name="selectedAddressFirstline" type="text" size="20">
+											<br><input ng-model="selectedAddressSecondline" name="selectedAddressSecondline" type="text" size="20">
+											<br>City: <input ng-model="selectedCity" name="selectedCity" type="text" size="10">
+											<br>County: <input ng-model="selectedCounty" name="selectedCounty" type="text" size="10"></p>
+											
+											<h3>Your employment details:</h3>
+											
+											<br>Employer: <input ng-model="selectedEmployer" name="selectedEmployer" type="text" size="10">
+											<br>Job title: <input ng-model="selectedJobTitle" name="selectedJobTitle" type="text" size="10"></p>
+															
+											<h3>National Insurance number and Phone</h3>
+											
+											<br>National insurance number: <input ng-model="selectedNINumber" name="selectedNINumber" type="text" size="10">
+											<br>Please repeat: <input ng-model="repeatedNINumber" name="repeatedNINumber" type="text" size="10">										
+											<br><span class="error" style="color:red;" ng-hide="differentNINumber">
+												Number is not the same
+											</span>										
+											<br>Phone: <input ng-model="selectedPhone" name="selectedPhone" ng-pattern="phoneNumberPattern" type="text" size="10" />
+											<span class="error-message" style="color:red;" ng-show="taxform.selectedPhone.$invalid">
+												Phone number is not valid
+											</span>
+											
+											<button id="secondPageProceedButton" ng-show1="showSecondPageProceedButton">PROCEED > </button>
+
+										</div>	
+									
+									</section>
+									
+									<section id="third-page">
+									
+										<div class="ezfc-element ezfc-custom-element ezfc-column ezfc-col-6 ezfc-element-wrapper-html animate-show">
+											<button id="downloadButton">Download file</button>
+											<button id="sendButton">Send the file to us</button>
+										</div>
+										
+										<div id="thank-you-message">
+											<h3>Thank you!</h3>
+										</div>
+									
+									</section>
+									
+								</div>
+							</form>
+						</div>
+						
+					</div>
 				</div>
-				
-				
-			</div>
-			<div class="question-block third-block animate-show" ng-show="selectedOccupation">
-				<p><b>Are you claiming for other expenses of your employment such as: professional and union subscriptions, professional registrations, tools and equipment?:</b></p>
-				<input ng-model="selectedOtherExpenses" type="radio" name="otherExpenses" value="yes">Yes<Br>
-				<input ng-model="selectedOtherExpenses" type="radio" name="otherExpenses" value="no">No<Br>
-				<p ng-show="selectedOtherExpensesYes"><b>Enter an estimate of how much you spend on these things in a year: &#163;</b> <input ng-model="ownExpenses" name="estimatedExpenses" type="number" size="10"></p>
-			</div>
-			<div class="question-block fourth-block animate-show" ng-show="selectedOtherExpenses">
-				<p><b>Do you or your accountant already prepare a self assessment tax return?</b></p>
-				<input ng-model="selectedPrepare" type="radio" name="prepare" value="yes">Yes<Br>
-				<input ng-model="selectedPrepare" type="radio" name="prepare" value="no">No<Br>
-			</div>
-			<div class="question-block fifth-block animate-show" ng-show="selectedPrepareShow">
-				<p><b>Select your tax years</b></p>
-				<br>Tick the years when you were employed in the specified sector
-				<br><input type="checkbox" ng-model="taxYears[0]" name="taxYears[0]" value="2012">6 Apr 2012 to 5 Apr 2013<Br>
-				<input type="checkbox" ng-model="taxYears[1]" name="taxYears[1]" value="2013">6 Apr 2013 to 5 Apr 2014<Br>
-				<input type="checkbox" ng-model="taxYears[2]" name="taxYears[2]" value="2014">6 Apr 2014 to 5 Apr 2015<Br>
-				<input type="checkbox" ng-model="taxYears[3]" name="taxYears[3]" value="2015">6 Apr 2015 to 5 Apr 2016</p>
-			</div>
-			<div class="question-block fifth-block animate-show" style="color:red;" ng-show="selectedPrepareHide">
-				Sorry, this service is not available for self employed clients.
-			</div>
-			<div class="question-block sixth-block animate-show" ng-show="selectedTaxYears && !selectedPrepareHide">
-				<p><b>About You</b></p>
-				<br>Title:
-				<select ng-model="selectedTitle" name="selectedTitle">
-					<option selected="selected" value="">Please select</option>
-					<option value="Mr">Mr</option>
-					<option value="Mrs">Mrs</option>
-					<option value="Miss">Miss</option>
-					<option value="Ms">Ms</option>
-					<option value="Dr">Dr</option>
-				</select>
-				<p><b>First name(s):</b> <input ng-model="selectedFirstName" name="selectedFirstName" type="text" size="10"></p>
-				<p><b>Surname:</b> <input ng-model="selectedSurname" name="selectedSurname" type="text" size="10"></p>
-				<p><b>Email:</b> <input ng-model="selectedEmail" name="selectedEmail" type="email" size="10" required></p>
-				<p><b>Repeat email:</b> <input ng-model="selectedConfirmedEmail" name="selectedConfirmedEmail" type="email" size="10"></p>
-				<input type="radio" ng-model="selectedCashbackBonus" name="cashbackBonus" value="yes"> I’d like to claim my £5 cashback signup bonus at UniformBenefits.com, I agree that my details will be passed to selected 3rd parties.<Br>
-				<input type="radio" ng-model="selectedCashbackBonus" name="cashbackBonus" value="no"> I don't want to receive my £5 cashback signup bonus, no details will be passed to 3rd parties<Br>
-				
-				<span class="error" style="color:red;" ng-show="myForm.$error.email">
-					E-mail is not valid
-				</span>
-				<span class="error" style="color:red;" ng-hide="validEmail">
-					E-mail isn't the same
-				</span>
-			</div>
-			<div class="question-block seventh-block animate-show" ng-show="selectedTitle && selectedFirstName && selectedSurname && validEmail && selectedCashbackBonus">
-				<button id="downloadButton">Download file</button>
-				<button id="sendButton">Send the file to us</button>
-			</div>
-		</form>
+			</article>			
+		</main>		
 	</div>
 
 	<script src="js/jquery-2.2.4.min.js"></script>
 	<script src="js/angular.min.js"></script>
-	<script> 
-		var app = angular.module('myApp', []);
-		app.controller('myCtrl', function($scope) {
+	<script src="js/angular.count-to.min.js"></script>
+	<script>
+		var app = angular.module('myApp', ['countTo']);
 		
-		
-			$scope.$watchGroup(['selectedEmail','selectedConfirmedEmail'], function(newValues, oldValues, scope) {
-				var validEmail;
-				if ((newValues[0] == newValues[1]) && (newValues[0]!=undefined) && (newValues[1]!=undefined)) {
-					validEmail = true;
-				} else if ((newValues[0]==undefined) && (newValues[1]==undefined)) {
-					validEmail = true;
-				} 
-				
-				$scope.validEmail = validEmail;
-			}); 
-			 
-			 
-			$scope.$watch('selectedOtherExpenses', function(selectedOtherExpenses){				
-				
-				var selectedOtherExpensesYes;
-				
-				if($scope.selectedOtherExpenses == 'yes') {
-					selectedOtherExpensesYes = true;
-				} else if ($scope.selectedOtherExpenses != undefined) {
-					selectedOtherExpensesYes = false;					
-					$scope.ownExpenses = undefined;
-				}
-				
-				$scope.selectedOtherExpensesYes = selectedOtherExpensesYes;
-			}, true); 
+			app.controller('myCtrl', function($scope) {
 			
-			$scope.onJobChange = function() {
-				$scope.selectedIndex = undefined;	
-				$scope.selectedOccupation = false;
-			}; 
-			
-			$scope.onOccupationChange = function(idx) {
-				$scope.selectedIndex = idx;
-			}; 
-			
-		
-			
-			$scope.jobs =  [
-				  {id: '0', title: 'Agriculture', occupationListId: '1'},
-				  {id: '1', title: 'Airlines', occupationListId: '2'},
-				  {id: '2', title: 'Aluminium', occupationListId: '3'},
-				  {id: '3', title: 'Armed Forces', occupationListId: '4'},
-				  {id: '4', title: 'ALL OTHER UNIFORMED WORKERS NOT LISTED HERE', occupationListId: '5'},
-				  {id: '5', title: 'Banks and Building Societes', occupationListId: '6'},
-				  {id: '6', title: 'Brass and Copper', occupationListId: '7'},
-				  {id: '7', title: 'Building', occupationListId: '8'},
-				  {id: '8', title: 'Building Materials', occupationListId: '9'},
-				  {id: '9', title: 'Clothing', occupationListId: '10'},
-				  {id: '10', title: 'Constructional Engineering', occupationListId: '11'},
-				  {id: '11', title: 'Electrical and electricity Supply', occupationListId: '12'},
-				  {id: '12', title: 'Fire Service', occupationListId: '13'},
-				  {id: '13', title: 'Food', occupationListId: '14'},
-				  {id: '14', title: 'Forestry', occupationListId: '15'},
-				  {id: '15', title: 'Glass', occupationListId: '16'},
-				  {id: '16', title: 'Hairdressing - all uniformed workers', occupationListId: '17'},
-				  {id: '17', title: 'Healthcare staff in the National Health Service, private hospitals and nursing homes', occupationListId: '18'},
-				  {id: '18', title: 'Heating', occupationListId: '19'},
-				  {id: '19', title: "I don't wear protective clothing or uniform", occupationListId: '0'},
-				  {id: '20', title: 'Iron and Steel', occupationListId: '20'},
-				  {id: '21', title: 'Iron Mining', occupationListId: '21'},
-				  {id: '22', title: 'Kitchen staff - all uniformed workers', occupationListId: '22'},
-				  {id: '23', title: 'Leather', occupationListId: '23'},
-				  {id: '24', title: 'Particular Engineering', occupationListId: '24'},
-				  {id: '25', title: 'Police Force', occupationListId: '25'},
-				  {id: '26', title: 'Postal Services', occupationListId: '26'},
-				  {id: '27', title: 'Precious Metals', occupationListId: '27'},
-				  {id: '28', title: 'Printing', occupationListId: '28'},
-				  {id: '29', title: 'Prisons', occupationListId: '29'},
-				  {id: '30', title: "Public Service: Public Transport", occupationListId: '30'},
-				  {id: '31', title: 'Public Service: Docks and Inland Waterways', occupationListId: '31'},
-				  {id: '32', title: 'Quarrying', occupationListId: '32'},
-				  {id: '33', title: 'Railways', occupationListId: '33'},
-				  {id: '34', title: 'Retail - all uniformed workers', occupationListId: '34'},
-				  {id: '35', title: 'Seamen', occupationListId: '35'},
-				  {id: '36', title: 'Security industry - all uniformed workers', occupationListId: '36'},
-				  {id: '37', title: 'Shipyards', occupationListId: '37'},
-				  {id: '38', title: 'Textiles and Textile Printing', occupationListId: '38'},
-				  {id: '39', title: 'Trades ancilliary to engineering', occupationListId: '39'},
-				  {id: '40', title: 'Vehicles', occupationListId: '40'},
-				  {id: '41', title: 'Wood and Furniture', occupationListId: '41'}
-				];
-				
-			  $scope.occupations =  [
-				  {id: '1', titles: ["All workers"],
-							amounts: [100]},
-				  {id: '2', titles: [	"Pilots and co-pilots: see EIM50050. Basic FRE £1,022 FRE plus £110 travel allowance per EIM50060.",
-										"Cabin crew. No nationally agreed rate. In the absence of a suitable locally agreed rate propose using Unite locally agreed rate of £720 per annum",
-										"Other employees"],
-							amounts: [0, 0, 0]},
-				  {id: '3', titles: [ 	"Continual casting operators, process operators, de-dimplers, driers, drill punchers, dross unloaders, firemen, furnace operators and their helpers, leaders, mould-men, pourers, remelt department labourers and roll flatteners.",
-										"Cable hands, case makers, labourers, mates, truck drivers and measurers and storekeepers.",
-										"Apprentices.",
-										"All other workers."],
-							amounts: [140, 80, 60, 120]},
-				  {id: '4', titles: [ 	"Royal Navy",
-										"Army",
-										"Royal Marines",
-										"Royal Airforce"],
-							amounts: [0, 0, 0, 0]},
-				  {id: '5', titles: ["All workers"],
-							amounts: [0]},
-				  {id: '6', titles: ["Uniformed doormen and messengers."],
-							amounts: [60]},
-				  {id: '7', titles: ["Braziers, coppersmiths, finishers, fitters, moulders, turners and all other workers."],
-							amounts: [120]},
-				  {id: '8', titles: [ 	"Joiners and carpenters.",
-										"Cement works, roofing felt and asphalt labourers.",
-										"Labourers and navvies.",
-										"All other workers."],
-							amounts: [140, 80, 60, 120]},
-				  {id: '9', titles: [ 	"Stone masons.",
-										"Tilemakers and labourers.",
-										"All other workers."],
-							amounts: [120, 60, 80]},
-				  {id: '10', titles: [	"Lacemakers, hosiery bleachers, dyers, scourers and knitters, knitwear bleachers and dyers.",
-										"All other workers."],
-							amounts: [60, 60]},
-				  {id: '11', titles: [ 	"Blacksmiths and their strikers, burners, caulkers, chippers, drillers, erectors, fitters, holders up, markers off, platers, riggers, riveters, rivet heaters, scaffolders, sheeters, template workers, turners and welders.",
-										"Banksmen, labourers, shop-helpers, slewers and straighteners.",
-										"Apprentices and storekeepers.",
-										"All other workers."],
-							amounts: [140, 80, 60, 100]},
-				  {id: '12', titles: [	"Those workers incurring laundry costs only.",
-										"All other workers."],
-							amounts: [60, 120]},
-				  {id: '13', titles: ["Uniformed fire fighters and fire officers."],
-							amounts: [80]},
-				  {id: '14', titles: ["All workers"],
-							amounts: [60]},
-				  {id: '15', titles: ["All workers"],
-							amounts: [100]},
-				  {id: '16', titles: ["All workers"],
-							amounts: [80]},
-				  {id: '17', titles: ["All workers"],
-							amounts: [0]},
-				  {id: '18', titles: [ 	"Ambulance staff on active service",
-										"Nurses, midwives, dental nurses, auxillaries, nursing assistants, healthcare assistants, care workers and similar. £100 allowance plus £12 shoes and £6 socks/tights allowances.",
-										"Chiropodists, occupational, speech, physiotherapists & other therapists, phlebotomists & radiographers.",
-										"Plaster room orderlies, hospital porters, ward clerks, sterile supply workers, hospital domestics & hospital catering staff.",
-										"Laboratory staff, pharmacists & pharmacy assistants.",
-										"Uniformed ancillary staff: maintenance workers, grounds staff, drivers, parking attendants & security guards, receptionists & other uniformed staff.",
-										"Nurse or similar claiming shoe and tights/sock allowance but not uniform laundry",
-										"Doctors and surgeons"],
-							amounts: [185, 125, 125, 125, 80, 80, 0, 0]},
-				  {id: '19', titles: [	"Pipe fitters and plumbers.",
-										"Coverers, laggers, domestic glaziers, heating engineers and all their mates.",
-										"All gas workers and all other workers."],
-							amounts: [120, 120, 100]},
-				  {id: '20', titles: [	"Day labourers, general labourers, stockmen, timekeepers, warehouse staff and weighmen.",
-										"Apprentices.",
-										"All other workers."],
-							amounts: [80, 60, 140]},
-				  {id: '21', titles: [	"Fillers, miners and underground workers.",
-										"All other workers."],
-							amounts: [60, 120]},
-				  {id: '22', titles: ["All workers"],
-							amounts: [0]},
-				  {id: '23', titles: [	"Curriers (wet workers), fellmongering workers and tanning operatives (wet).",
-										"All other workers."],
-							amounts: [80, 60]},
-				  {id: '24', titles: [ 	"Pattern makers.",
-										"Chainmakers; cleaners, galvanisers, tinners and wire drawers in the wire drawing industry and toolmakers in the lock making industry.",
-										"Apprentices and storekeepers.",
-										"All other workers."],
-							amounts: [140, 120, 60, 80]},
-				  {id: '25', titles: [	"Police officers (ranks up to and including Chief Inspector).",
-										"Community support officers, and other police employees: see EIM68130"],
-							amounts: [140, 0]},
-				  {id: '26', titles: [	"Postal staff. No nationally agreed rate, propose using locally agreed rate"],
-							amounts: [0]},
-				  {id: '27', titles: ["All workers"],
-							amounts: [100]},
-				  {id: '28', titles: [	"Letterpress Section-electrical engineers (rotary presses), electrotypers, ink and roller makers, machine minders (rotary), maintenance engineers (rotary presses) and stereotypers.",
-										"Bench hands (periodical and bookbinding section), compositors (letterpress section), readers (letterpress section) telecommunications and electronic section wire room operators, warehousemen (paper box making section).",
-										"All other workers."],
-							amounts: [140, 60, 100]},
-				  {id: '29', titles: [	"Uniformed prison officers."],
-							amounts: [80]},
-				  {id: '30', titles: [	"Garage hands including cleaners.",
-										"Conductors and drivers."],
-							amounts: [80, 60]},
-				  {id: '31', titles: [	"Dockers, dredger drivers and hopper steerers.",
-										"All other workers.",
-										"Third Choice"],
-							amounts: [80, 60, 0]},
-				  {id: '32', titles: [	"All workers"],
-							amounts: [100]},
-				  {id: '33', titles: [	"See the appropriate category for craftsmen (for example engineers, vehicles, etc.). All other workers."],
-							amounts: [100]},
-				  {id: '34', titles: [	"All workers"],
-							amounts: [0]},
-				  {id: '35', titles: [	"Carpenters. a. Passenger liners.",
-										"Cargo vessels, tankers, coasters and ferries."],
-							amounts: [165, 140]},
-				  {id: '36', titles: [	"All workers"],
-							amounts: [0]},
-				  {id: '37', titles: [ 	"Blacksmiths and their strikers, boilermakers, burners, carpenters, caulkers, drillers, furnacemen (platers) holders up, fitters, platers, plumbers, riveters, sheet iron workers, shipwrights, tubers and welders.",
-										"Labourers.",
-										"Apprentices and storekeepers.",
-										"All other workers."],
-							amounts: [140, 80, 60, 100]},
-				  {id: '38', titles: [	"Carders, carding engineers, overlookers and technicians in spinning mills.",
-										"All other workers."],
-							amounts: [120, 80]},
-				  {id: '39', titles: [ 	"Pattern makers.",
-										"Labourers, supervisory and unskilled workers.",
-										"Apprentices and storekeepers.",
-										"Motor mechanics in garage repair shop.",
-										"All other workers."],
-							amounts: [140, 80, 60, 120, 120]},
-				  {id: '40', titles: [	"Builders, railway vehicle repairers and railway wagon lifters.",
-										"Railway vehicle painters, letterers, and builders’ and repairers’ assistants.",
-										"All other workers."],
-							amounts: [140, 80, 60]},
-				  {id: '41', titles: [ 	"Carpenters, cabinetmakers, joiners, wood carvers and woodcutting machinists.",
-										"Artificial limb makers (other than in wood), organ builders and packaging case makers.",
-										"Coopers not providing their own tools, labourers, polishers and upholsterers.",
-										"All other workers."],
-							amounts: [140, 120, 60, 100]}
-				];  
-				 
-
-				$scope.$watch('taxYears', function(taxYears){
-
-					var selectedTaxYears = false;
-					angular.forEach(taxYears, function(taxYear, index){
-						if (taxYear) {
-							selectedTaxYears = true;
+				$scope.phoneNumberPattern = (function() {
+					var regexp = /^[(]{0,1}[0-9]{0,4}[) ]{0,1}[0-9]{3}[\-]{0,1}[0-9]{2}[\-]{0,1}[0-9]{2}$/;
+					return {
+						test: function(value) {
+							return regexp.test(value.replace(/ /g,''));							
 						}
-					})
+					};
+				})(); 
 
-					$scope.selectedTaxYears = selectedTaxYears; 
-
-				}, true);
+				$scope.$watchGroup(['selectedNINumber','repeatedNINumber'], function(newValues, oldValues, scope) {
+					var differentNINumber;
+					if ((newValues[0] == newValues[1]) && (newValues[0]!=undefined) && (newValues[1]!=undefined)) {
+						differentNINumber = true;
+					} else if ((newValues[0]==undefined) && (newValues[1]==undefined)) {
+						differentNINumber = true;
+					} 
+					
+					$scope.differentNINumber = differentNINumber;
+				}); 
 				
-				var selectedPrepareShow;
-				var selectedPrepareHide;
-				
-				$scope.$watch('selectedPrepare', function(selectedPrepare){				
-				
-					if($scope.selectedPrepare == 'yes') {
-						selectedPrepareShow = false;
-						selectedPrepareHide = true;
+				$scope.$watchGroup(['selectedTitle',
+									'selectedFirstName',
+									'selectedSurname',
+									'validEmail',
+									'selectedPostcode',
+									'selectedAddressFirstline',
+									'selectedAddressSecondline',
+									'selectedCity',
+									'selectedCounty',
+									'selectedEmployer',
+									'selectedJobTitle',
+									'selectedNINumber',
+									'selectedPhone'], function(newValues, oldValues, scope) {
+					var showSecondPageProceedButton = false;
+					if (newValues[0]
+					&& newValues[1]
+					&& newValues[2]
+					&& newValues[3]
+					&& newValues[4]
+					&& newValues[5]
+					&& newValues[6]
+					&& newValues[7]
+					&& newValues[8]
+					&& newValues[9]
+					&& newValues[10]
+					&& newValues[11]
+					&& newValues[12]		
+					) {
+						showSecondPageProceedButton = true;
 						
-					} else if ($scope.selectedPrepare != undefined) {
-						selectedPrepareShow = true;
-						selectedPrepareHide = false;
 					}
-					 
-					$scope.selectedPrepareShow = selectedPrepareShow;
-					$scope.selectedPrepareHide = selectedPrepareHide;
+					$scope.showSecondPageProceedButton = showSecondPageProceedButton;
+					
+				}); 
+				
+				$scope.$watchGroup(['selectedEmail','selectedConfirmedEmail'], function(newValues, oldValues, scope) {
+					var validEmail;
+					if ((newValues[0] == newValues[1]) && (newValues[0]!=undefined) && (newValues[1]!=undefined)) {
+						validEmail = true;
+					} else if ((newValues[0]==undefined) && (newValues[1]==undefined)) {
+						validEmail = true;
+					} 
+					
+					$scope.validEmail = validEmail;
+				}); 
+				 
+				
+				$scope.$watch('ownExpenses', function(ownExpenses){				
+					
+					if($scope.ownExpenses == undefined ) {
+						$scope.ownExpenses = 0;
+					}					
 				}, true); 
 				
-		});
+				$scope.$watch('selectedOtherExpenses', function(selectedOtherExpenses){				
+					
+					var selectedOtherExpensesYes;
+					
+					if($scope.selectedOtherExpenses == 'yes') {
+						selectedOtherExpensesYes = true;
+					} else if ($scope.selectedOtherExpenses != undefined) {
+						selectedOtherExpensesYes = false;					
+						$scope.ownExpenses = undefined;
+					}
+					
+					$scope.selectedOtherExpensesYes = selectedOtherExpensesYes;
+				}, true); 
+				
+				$scope.onJobChange = function() {
+					$scope.selectedIndex = undefined;	
+					$scope.selectedOccupation = false;
+				}; 
+				
+				$scope.onOccupationChange = function(idx) {
+					$scope.selectedIndex = idx;
+				}; 
+				
+			
+				
+				$scope.jobs =  [
+					  {id: '0', title: 'Agriculture', occupationsListId: '1'},
+					  {id: '1', title: 'Airlines', occupationsListId: '2'},
+					  {id: '2', title: 'Aluminium', occupationsListId: '3'},
+					  {id: '3', title: 'Armed Forces', occupationsListId: '4'},
+					  {id: '4', title: 'ALL OTHER UNIFORMED WORKERS NOT LISTED HERE', occupationsListId: '5'},
+					  {id: '5', title: 'Banks and Building Societes', occupationsListId: '6'},
+					  {id: '6', title: 'Brass and Copper', occupationsListId: '7'},
+					  {id: '7', title: 'Building', occupationsListId: '8'},
+					  {id: '8', title: 'Building Materials', occupationsListId: '9'},
+					  {id: '9', title: 'Clothing', occupationsListId: '10'},
+					  {id: '10', title: 'Constructional Engineering', occupationsListId: '11'},
+					  {id: '11', title: 'Electrical and electricity Supply', occupationsListId: '12'},
+					  {id: '12', title: 'Fire Service', occupationsListId: '13'},
+					  {id: '13', title: 'Food', occupationsListId: '14'},
+					  {id: '14', title: 'Forestry', occupationsListId: '15'},
+					  {id: '15', title: 'Glass', occupationsListId: '16'},
+					  {id: '16', title: 'Hairdressing - all uniformed workers', occupationsListId: '17'},
+					  {id: '17', title: 'Healthcare staff in the National Health Service, private hospitals and nursing homes', occupationsListId: '18'},
+					  {id: '18', title: 'Heating', occupationsListId: '19'},
+					  {id: '19', title: "I don't wear protective clothing or uniform", occupationsListId: '0'},
+					  {id: '20', title: 'Iron and Steel', occupationsListId: '20'},
+					  {id: '21', title: 'Iron Mining', occupationsListId: '21'},
+					  {id: '22', title: 'Kitchen staff - all uniformed workers', occupationsListId: '22'},
+					  {id: '23', title: 'Leather', occupationsListId: '23'},
+					  {id: '24', title: 'Particular Engineering', occupationsListId: '24'},
+					  {id: '25', title: 'Police Force', occupationsListId: '25'},
+					  {id: '26', title: 'Postal Services', occupationsListId: '26'},
+					  {id: '27', title: 'Precious Metals', occupationsListId: '27'},
+					  {id: '28', title: 'Printing', occupationsListId: '28'},
+					  {id: '29', title: 'Prisons', occupationsListId: '29'},
+					  {id: '30', title: "Public Service: Public Transport", occupationsListId: '30'},
+					  {id: '31', title: 'Public Service: Docks and Inland Waterways', occupationsListId: '31'},
+					  {id: '32', title: 'Quarrying', occupationsListId: '32'},
+					  {id: '33', title: 'Railways', occupationsListId: '33'},
+					  {id: '34', title: 'Retail - all uniformed workers', occupationsListId: '34'},
+					  {id: '35', title: 'Seamen', occupationsListId: '35'},
+					  {id: '36', title: 'Security industry - all uniformed workers', occupationsListId: '36'},
+					  {id: '37', title: 'Shipyards', occupationsListId: '37'},
+					  {id: '38', title: 'Textiles and Textile Printing', occupationsListId: '38'},
+					  {id: '39', title: 'Trades ancilliary to engineering', occupationsListId: '39'},
+					  {id: '40', title: 'Vehicles', occupationsListId: '40'},
+					  {id: '41', title: 'Wood and Furniture', occupationsListId: '41'}
+					];
+					
+				  $scope.occupations =  [
+					  {id: '1', titles: ["All workers"],
+								amounts: [100]},
+					  {id: '2', titles: [	"Pilots and co-pilots: see EIM50050. Basic FRE £1,022 FRE plus £110 travel allowance per EIM50060.",
+											"Cabin crew. No nationally agreed rate. In the absence of a suitable locally agreed rate propose using Unite locally agreed rate of £720 per annum",
+											"Other employees"],
+								amounts: [0, 0, 0]},
+					  {id: '3', titles: [ 	"Continual casting operators, process operators, de-dimplers, driers, drill punchers, dross unloaders, firemen, furnace operators and their helpers, leaders, mould-men, pourers, remelt department labourers and roll flatteners.",
+											"Cable hands, case makers, labourers, mates, truck drivers and measurers and storekeepers.",
+											"Apprentices.",
+											"All other workers."],
+								amounts: [140, 80, 60, 120]},
+					  {id: '4', titles: [ 	"Royal Navy",
+											"Army",
+											"Royal Marines",
+											"Royal Airforce"],
+								amounts: [0, 0, 0, 0]},
+					  {id: '5', titles: ["All workers"],
+								amounts: [0]},
+					  {id: '6', titles: ["Uniformed doormen and messengers."],
+								amounts: [60]},
+					  {id: '7', titles: ["Braziers, coppersmiths, finishers, fitters, moulders, turners and all other workers."],
+								amounts: [120]},
+					  {id: '8', titles: [ 	"Joiners and carpenters.",
+											"Cement works, roofing felt and asphalt labourers.",
+											"Labourers and navvies.",
+											"All other workers."],
+								amounts: [140, 80, 60, 120]},
+					  {id: '9', titles: [ 	"Stone masons.",
+											"Tilemakers and labourers.",
+											"All other workers."],
+								amounts: [120, 60, 80]},
+					  {id: '10', titles: [	"Lacemakers, hosiery bleachers, dyers, scourers and knitters, knitwear bleachers and dyers.",
+											"All other workers."],
+								amounts: [60, 60]},
+					  {id: '11', titles: [ 	"Blacksmiths and their strikers, burners, caulkers, chippers, drillers, erectors, fitters, holders up, markers off, platers, riggers, riveters, rivet heaters, scaffolders, sheeters, template workers, turners and welders.",
+											"Banksmen, labourers, shop-helpers, slewers and straighteners.",
+											"Apprentices and storekeepers.",
+											"All other workers."],
+								amounts: [140, 80, 60, 100]},
+					  {id: '12', titles: [	"Those workers incurring laundry costs only.",
+											"All other workers."],
+								amounts: [60, 120]},
+					  {id: '13', titles: ["Uniformed fire fighters and fire officers."],
+								amounts: [80]},
+					  {id: '14', titles: ["All workers"],
+								amounts: [60]},
+					  {id: '15', titles: ["All workers"],
+								amounts: [100]},
+					  {id: '16', titles: ["All workers"],
+								amounts: [80]},
+					  {id: '17', titles: ["All workers"],
+								amounts: [0]},
+					  {id: '18', titles: [ 	"Ambulance staff on active service",
+											"Nurses, midwives, dental nurses, auxillaries, nursing assistants, healthcare assistants, care workers and similar. £100 allowance plus £12 shoes and £6 socks/tights allowances.",
+											"Chiropodists, occupational, speech, physiotherapists & other therapists, phlebotomists & radiographers.",
+											"Plaster room orderlies, hospital porters, ward clerks, sterile supply workers, hospital domestics & hospital catering staff.",
+											"Laboratory staff, pharmacists & pharmacy assistants.",
+											"Uniformed ancillary staff: maintenance workers, grounds staff, drivers, parking attendants & security guards, receptionists & other uniformed staff.",
+											"Nurse or similar claiming shoe and tights/sock allowance but not uniform laundry",
+											"Doctors and surgeons"],
+								amounts: [185, 125, 125, 125, 80, 80, 0, 0]},
+					  {id: '19', titles: [	"Pipe fitters and plumbers.",
+											"Coverers, laggers, domestic glaziers, heating engineers and all their mates.",
+											"All gas workers and all other workers."],
+								amounts: [120, 120, 100]},
+					  {id: '20', titles: [	"Day labourers, general labourers, stockmen, timekeepers, warehouse staff and weighmen.",
+											"Apprentices.",
+											"All other workers."],
+								amounts: [80, 60, 140]},
+					  {id: '21', titles: [	"Fillers, miners and underground workers.",
+											"All other workers."],
+								amounts: [60, 120]},
+					  {id: '22', titles: ["All workers"],
+								amounts: [0]},
+					  {id: '23', titles: [	"Curriers (wet workers), fellmongering workers and tanning operatives (wet).",
+											"All other workers."],
+								amounts: [80, 60]},
+					  {id: '24', titles: [ 	"Pattern makers.",
+											"Chainmakers; cleaners, galvanisers, tinners and wire drawers in the wire drawing industry and toolmakers in the lock making industry.",
+											"Apprentices and storekeepers.",
+											"All other workers."],
+								amounts: [140, 120, 60, 80]},
+					  {id: '25', titles: [	"Police officers (ranks up to and including Chief Inspector).",
+											"Community support officers, and other police employees: see EIM68130"],
+								amounts: [140, 60]},
+					  {id: '26', titles: [	"Postal staff. No nationally agreed rate, propose using locally agreed rate"],
+								amounts: [0]},
+					  {id: '27', titles: ["All workers"],
+								amounts: [100]},
+					  {id: '28', titles: [	"Letterpress Section-electrical engineers (rotary presses), electrotypers, ink and roller makers, machine minders (rotary), maintenance engineers (rotary presses) and stereotypers.",
+											"Bench hands (periodical and bookbinding section), compositors (letterpress section), readers (letterpress section) telecommunications and electronic section wire room operators, warehousemen (paper box making section).",
+											"All other workers."],
+								amounts: [140, 60, 100]},
+					  {id: '29', titles: [	"Uniformed prison officers."],
+								amounts: [80]},
+					  {id: '30', titles: [	"Garage hands including cleaners.",
+											"Conductors and drivers."],
+								amounts: [80, 60]},
+					  {id: '31', titles: [	"Dockers, dredger drivers and hopper steerers.",
+											"All other workers.",
+											"Third Choice"],
+								amounts: [80, 60, 0]},
+					  {id: '32', titles: [	"All workers"],
+								amounts: [100]},
+					  {id: '33', titles: [	"See the appropriate category for craftsmen (for example engineers, vehicles, etc.). All other workers."],
+								amounts: [100]},
+					  {id: '34', titles: [	"All workers"],
+								amounts: [0]},
+					  {id: '35', titles: [	"Carpenters. a. Passenger liners.",
+											"Cargo vessels, tankers, coasters and ferries."],
+								amounts: [165, 140]},
+					  {id: '36', titles: [	"All workers"],
+								amounts: [0]},
+					  {id: '37', titles: [ 	"Blacksmiths and their strikers, boilermakers, burners, carpenters, caulkers, drillers, furnacemen (platers) holders up, fitters, platers, plumbers, riveters, sheet iron workers, shipwrights, tubers and welders.",
+											"Labourers.",
+											"Apprentices and storekeepers.",
+											"All other workers."],
+								amounts: [140, 80, 60, 100]},
+					  {id: '38', titles: [	"Carders, carding engineers, overlookers and technicians in spinning mills.",
+											"All other workers."],
+								amounts: [120, 80]},
+					  {id: '39', titles: [ 	"Pattern makers.",
+											"Labourers, supervisory and unskilled workers.",
+											"Apprentices and storekeepers.",
+											"Motor mechanics in garage repair shop.",
+											"All other workers."],
+								amounts: [140, 80, 60, 120, 120]},
+					  {id: '40', titles: [	"Builders, railway vehicle repairers and railway wagon lifters.",
+											"Railway vehicle painters, letterers, and builders’ and repairers’ assistants.",
+											"All other workers."],
+								amounts: [140, 80, 60]},
+					  {id: '41', titles: [ 	"Carpenters, cabinetmakers, joiners, wood carvers and woodcutting machinists.",
+											"Artificial limb makers (other than in wood), organ builders and packaging case makers.",
+											"Coopers not providing their own tools, labourers, polishers and upholsterers.",
+											"All other workers."],
+								amounts: [140, 120, 60, 100]}
+					];  
+					 
+
+					$scope.$watch('taxYears', function(taxYears){
+
+						var selectedTaxYears = false;
+						angular.forEach(taxYears, function(taxYear, index){
+							if (taxYear) {
+								selectedTaxYears = true;
+							}
+						})
+
+						$scope.selectedTaxYears = selectedTaxYears; 
+
+					}, true);
+					
+					var selectedPrepareShow;
+					var selectedPrepareHide;
+					
+					$scope.$watch('selectedPrepare', function(selectedPrepare){				
+					
+						if($scope.selectedPrepare == 'yes') {
+							selectedPrepareShow = false;
+							selectedPrepareHide = true;
+							
+						} else if ($scope.selectedPrepare != undefined) {
+							selectedPrepareShow = true;
+							selectedPrepareHide = false;
+						}
+						 
+						$scope.selectedPrepareShow = selectedPrepareShow;
+						$scope.selectedPrepareHide = selectedPrepareHide;
+					}, true); 
+					});
+			
 		
-		jQuery('#downloadButton').click(function(){
-			jQuery('#tax-form').attr('action','download.php');
-			jQuery('#tax-form').submit();
-		});
-		
-		jQuery('#sendButton').click(function(){
-			jQuery('#tax-form').attr('action','sendfile.php');
-			jQuery('#tax-form').submit();
+
+		jQuery( document ).ready(function() {
+			jQuery('#downloadButton').click(function(){
+				jQuery('#taxform').attr('action','download.php');
+				jQuery('#taxform').submit();
+				jQuery('#downloadButton').hide();
+				jQuery('#sendButton').hide();
+				jQuery('#thank-you-message').show();
+			});
+			
+			jQuery('#sendButton').click(function(){
+				jQuery('#taxform').attr('action','sendfile.php');
+				jQuery('#taxform').submit();
+				jQuery('#downloadButton').hide();
+				jQuery('#sendButton').hide();			
+			});
+			
+			jQuery('#firstPageProceedButton').click(function(event){
+				event.preventDefault();
+				jQuery('#first-page').hide('slow');
+				
+				function displaySecondSection() {
+					jQuery('#second-page').show('slow');
+				}
+				
+				setTimeout(displaySecondSection(), 1000);
+			});
+			
+			jQuery('#secondPageProceedButton').click(function(){
+				event.preventDefault();
+				jQuery('#second-page').hide('slow');
+				
+				function displayThirdSection() {
+					jQuery('#third-page').show('slow');
+				}
+				
+				setTimeout(displayThirdSection(), 1000);
+			});
 		});
 	</script>
 </body>

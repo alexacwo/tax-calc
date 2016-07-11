@@ -14,18 +14,37 @@
 			$pdf->WriteHTML('<br>Tax year: '.$taxyear.'<br>');
 		}
 	}
+	
+	$pdf->WriteHTML('<hr><br><br>Contact details:<br><br><hr><br>');
+	
 	if (!empty($_POST['selectedTitle'])) {$pdf->WriteHTML('<br>Title: '.$_POST['selectedTitle'].'<br>');}
 	if (!empty($_POST['selectedFirstName'])) {$pdf->WriteHTML('<br>Firstname(s): '.$_POST['selectedFirstName'].'<br>');}
 	if (!empty($_POST['selectedSurname'])) {$pdf->WriteHTML('<br>Surname: '.$_POST['selectedSurname'].'<br>');}
 	if (!empty($_POST['selectedEmail'])) {$pdf->WriteHTML('<br>E-mail: '.$_POST['selectedEmail'].'<br>');}
 	if (!empty($_POST['cashbackBonus'])) {$pdf->WriteHTML('<br>CashbackBonus: '.$_POST['cashbackBonus'].'<br>');}
 	
+	if (!empty($_POST['selectedPostcode'])) {$pdf->WriteHTML('<br>Postcode: '.$_POST['selectedPostcode'].'<br>');}
+	if (!empty($_POST['selectedAddressFirstline'])) {$pdf->WriteHTML('<br>Address (first line): '.$_POST['selectedAddressFirstline'].'<br>');}
+	if (!empty($_POST['selectedAddressSecondline'])) {$pdf->WriteHTML('<br>Address (second line): '.$_POST['selectedAddressSecondline'].'<br>');}
+	if (!empty($_POST['selectedCity'])) {$pdf->WriteHTML('<br>City: '.$_POST['selectedCity'].'<br>');}
+	if (!empty($_POST['selectedCounty'])) {$pdf->WriteHTML('<br>County: '.$_POST['selectedCounty'].'<br>');}
+	
+	if (!empty($_POST['selectedEmployer'])) {$pdf->WriteHTML('<br><br>Employer: '.$_POST['selectedEmployer'].'<br>');}
+	if (!empty($_POST['selectedJobTitle'])) {$pdf->WriteHTML('<br>Job title: '.$_POST['selectedJobTitle'].'<br>');}
+	
+	
+	$pdf->WriteHTML('<hr><br><br>National insurance number:<br><br><hr><br>');
+	
+	if (!empty($_POST['selectedNINumber'])) {$pdf->WriteHTML('<br>National insurance number: '.$_POST['selectedNINumber'].'<br>');}
+	if (!empty($_POST['selectedPhone'])) {$pdf->WriteHTML('<br>Phone: '.$_POST['selectedPhone'].'<br>');}
+	
+	
 	//Generating Claim Reference Number 
 	
 	$servername = "localhost";
-	$username = "root";
-	$password = "";
-	$dbname = "taxrebate";
+	$username = "motoparts_rubik";
+	$password = "123456";
+	$dbname = "motoparts_rubik";
 	
 	$conn = new mysqli($servername, $username, $password, $dbname);
 	
