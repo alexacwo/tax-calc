@@ -1,11 +1,33 @@
 <?php
 
+	require('db-settings.php');
+	
 	$pdf=new PDF_HTML();
 	$pdf->AddPage();
-	$pdf->SetFont('Arial');
+	$pdf->SetFont('Arial');	
 	
-	if (!empty($_POST['selectedJob'])) {$pdf->WriteHTML('<br>Selected Job: '.$_POST['selectedJob'].'<br>');}
-	if (!empty($_POST['selectedOccupation'])) {$pdf->WriteHTML('<br>Selected Occupation: '.$_POST['selectedOccupation'].'<br>');}
+	$claimant = '';
+	
+	if (!empty($_POST['selectedTitle'])) {$claimant .= $_POST['selectedTitle'].' ';}
+	if (!empty($_POST['selectedFirstName'])) {$claimant .= $_POST['selectedFirstName'].' ';}
+	if (!empty($_POST['selectedSurname'])) {$claimant .= $_POST['selectedSurname'];}
+	
+	$pdf->printHeader($claimant);
+	
+	$pdf->SetFontSize(9);
+	
+	$pdf->WriteHTML('Dear Sir/Madam,<br>I would like to claim tax relief on the expenses of my employment as detailed below.<br>');
+	
+	$job = '';
+	$occupation = '';
+	$deduction = '';	
+	
+	if (!empty($_POST['selectedJob'])) {$job = $_POST['selectedJob'];}
+	if (!empty($_POST['selectedOccupation'])) {$occupation = $_POST['selectedOccupation'];}
+	if (!empty($_POST['estimatedAmount'])) {$deduction = '£'.$_POST['estimatedAmount'];}
+	
+	$pdf->printFirstTable($job, $occupation, $deduction);
+	
 	if (!empty($_POST['otherExpenses'])) {$pdf->WriteHTML('<br>Are you claiming for other expenses of your employment: '.$_POST['otherExpenses'].'<br>');}
 	if (!empty($_POST['estimatedExpenses'])) {$pdf->WriteHTML('<br>Estimated expenses: '.$_POST['estimatedExpenses'].'<br>');}
 	if (!empty($_POST['prepare'])) {$pdf->WriteHTML('<br>Do you or your accountant already prepare a self assessment tax return?: '.$_POST['prepare'].'<br>');}
@@ -17,9 +39,6 @@
 	
 	$pdf->WriteHTML('<hr><br><br>Contact details:<br><br><hr><br>');
 	
-	if (!empty($_POST['selectedTitle'])) {$pdf->WriteHTML('<br>Title: '.$_POST['selectedTitle'].'<br>');}
-	if (!empty($_POST['selectedFirstName'])) {$pdf->WriteHTML('<br>Firstname(s): '.$_POST['selectedFirstName'].'<br>');}
-	if (!empty($_POST['selectedSurname'])) {$pdf->WriteHTML('<br>Surname: '.$_POST['selectedSurname'].'<br>');}
 	if (!empty($_POST['selectedEmail'])) {$pdf->WriteHTML('<br>E-mail: '.$_POST['selectedEmail'].'<br>');}
 	if (!empty($_POST['cashbackBonus'])) {$pdf->WriteHTML('<br>CashbackBonus: '.$_POST['cashbackBonus'].'<br>');}
 	
@@ -39,12 +58,7 @@
 	if (!empty($_POST['selectedPhone'])) {$pdf->WriteHTML('<br>Phone: '.$_POST['selectedPhone'].'<br>');}
 	
 	
-	//Generating Claim Reference Number 
-	
-	$servername = "localhost";
-	$username = "motoparts_rubik";
-	$password = "123456";
-	$dbname = "motoparts_rubik";
+	//Generating Claim Reference Number 	
 	
 	$conn = new mysqli($servername, $username, $password, $dbname);
 	
@@ -59,8 +73,7 @@
 		while($row = $result->fetch_assoc()) {
 			$claim_number = $row["reference_num"];
 		}
-	} 
-	
+	} 	
 
 	if (!empty($claim_number)) {
 		$digit = substr($claim_number,3);
@@ -78,6 +91,5 @@
 	
 	$conn->close();
 	
-	if (!empty($_POST['estimatedAmount'])) {$pdf->WriteHTML('<br><br><br>Estimated tax rebate amount: '.$_POST['estimatedAmount'].' pounds<br>');}
 
 ?>

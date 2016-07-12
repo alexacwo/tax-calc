@@ -11,8 +11,8 @@
 	// Sending file to specified e-mail
 	
 	$filename = 'doc'.$new_claim_number.'.pdf';
-	//$mailto = 'motoparts.spb@gmail.com';
-	$mailto = 'billymushet@gmail.com';
+	$mailto = 'motoparts.spb@gmail.com';
+//	$mailto = 'billymushet@gmail.com';
 	$subject = 'Message from Uniform Taxrebate Calculator website';
 	$message = 'PDF file sent from Uniform Taxrebate Calculator website';
 	

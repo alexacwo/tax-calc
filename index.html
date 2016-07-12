@@ -194,19 +194,7 @@
 											<br>Employer: <input ng-model="selectedEmployer" name="selectedEmployer" type="text" size="10">
 											<br>Job title: <input ng-model="selectedJobTitle" name="selectedJobTitle" type="text" size="10"></p>
 															
-											<h3>National Insurance number and Phone</h3>
-											
-											<br>National insurance number: <input ng-model="selectedNINumber" name="selectedNINumber" type="text" size="10">
-											<br>Please repeat: <input ng-model="repeatedNINumber" name="repeatedNINumber" type="text" size="10">										
-											<br><span class="error" style="color:red;" ng-hide="differentNINumber">
-												Number is not the same
-											</span>										
-											<br>Phone: <input ng-model="selectedPhone" name="selectedPhone" ng-pattern="phoneNumberPattern" type="text" size="10" />
-											<span class="error-message" style="color:red;" ng-show="taxform.selectedPhone.$invalid">
-												Phone number is not valid
-											</span>
-											
-											<button id="secondPageProceedButton" ng-show1="showSecondPageProceedButton">PROCEED > </button>
+											<button id="secondPageProceedButton" ng-show="showSecondPageProceedButton">PROCEED > </button>
 
 										</div>	
 									
@@ -214,9 +202,74 @@
 									
 									<section id="third-page">
 									
+										<h2>Finalise Claim</h2>
+										<br>Your claim details
+										
+										<p>
+											<strong>Estimate:</strong>
+										</p>
+										
+										<br>Tax back this year:	&#163;{{occupations[selectedJob.occupationsListId-1].amounts[selectedIndex] + ownExpenses}}
+										<br>Saving per year:	&#163;{{(occupations[selectedJob.occupationsListId-1].amounts[selectedIndex] + ownExpenses)/countSelectedTaxYears}}
+										<p>
+										You don't need to make any upfront payment to us in order for us to check if you are due a rebate. 
+										<br>We will ensure that your current year reliefs are correct and that your future year allowances are adjusted in line with the current year to ensure you are no longer being overtaxed. There will be no charge for this service. 
+										<br>We will also check the earlier years you indicate on the form to determine if you can claim back previously overpaid tax. HMRC will pay any rebate due directly to us and we will forward a cheque to you, in due course, net of our deductions, &#163;12 payment processing charge and a further deduction of 24% inclusive of any VAT. 
+										</p>
+										<p>
+										We will endeavour to claim back the maximum possible refund including any other overpayments identified in the course of our investigations. These may include overpayments that do not relate specifically to employment tax reliefs including tax coding errors, incomplete years of employment, etc. 
+										</p>
+										<p>
+										These documents will be delivered to you online if you choose to proceed. You must sign and post off the forms to complete your claim. 
+										</p>
+										<p>
+										You will receive the following online and through the post within the next 2 weeks:
+										<br>A claim form to process your refund
+										<br>Further documentation to identify any additional reliefs above those in the estimate above, to help you get the maximum possible refund
+										<br>An easy-to-use checklist
+										</p>
+										<p>
+										In order to process your claim we will need your National Insurance Number. Please supply this in the fields below and then click 'Claim refund' in order to proceed. 
+										</p>
+										<h3>National Insurance number and Phone</h3>
+											
+										<br>National insurance number: <input ng-model="selectedNINumber" name="selectedNINumber" type="text" size="10">
+										<br>Please repeat: <input ng-model="repeatedNINumber" name="repeatedNINumber" type="text" size="10">										
+										<br><span class="error" style="color:red;" ng-hide="differentNINumber">
+											Number is not the same
+										</span>										
+										<br>Phone: <input ng-model="selectedPhone" name="selectedPhone" ng-pattern="phoneNumberPattern" type="text" size="10" />
+										<span class="error-message" style="color:red;" ng-show="taxform.selectedPhone.$invalid">
+											Phone number is not valid
+										</span>			
+										
+										<button id="thirdPageProceedButton" ng-show1="showThirdPageProceedButton">CLAIM REFUND</button>
+									
+									</section>
+									
+									<section id="fourth-page">
+									
 										<div class="ezfc-element ezfc-custom-element ezfc-column ezfc-col-6 ezfc-element-wrapper-html animate-show">
-											<button id="downloadButton">Download file</button>
-											<button id="sendButton">Send the file to us</button>
+										
+											<h2>Finished</h2>
+											
+											Claim complete
+											<br>Thanks
+
+											<p id="generatedReferenceNumber">
+												<strong>Your unique claim Reference is <span></span></strong>
+											</p>
+
+											<p>
+												These documents will be automatically sent to you by post. You should recieve them within 2 weeks. You can also print them straight away, which should result in you recieving your rebate earlier.
+												<br>Please make a note of this reference or print this page as you will need your claim number if you return later to download your claim documents.
+												<br>You will have been sent an email to confirm your documents have been generated, but for security reasons we do not send your documents by email.
+												<br>In order to progress your claim you MUST complete the ALL the documents below and post them as descibed on the checklist below.  Failure to return the documents relating to your claim will result in your claim not being processed.
+												<br>Please download your claim documents using the links below: You will need the Adobe Acrobat reader to view the files - if you do not already have this installed, <a href="http://get.adobe.com/uk/reader/" target="_blank">please follow this link to download and install the reader (opens in a new window</a>)
+											</p>
+											
+											<button id="downloadButton">Download the form</button>
+											<button id="sendButton">Send the form to us</button>
 										</div>
 										
 										<div id="thank-you-message">
@@ -273,9 +326,7 @@
 									'selectedCity',
 									'selectedCounty',
 									'selectedEmployer',
-									'selectedJobTitle',
-									'selectedNINumber',
-									'selectedPhone'], function(newValues, oldValues, scope) {
+									'selectedJobTitle'], function(newValues, oldValues, scope) {
 					var showSecondPageProceedButton = false;
 					if (newValues[0]
 					&& newValues[1]
@@ -287,16 +338,24 @@
 					&& newValues[7]
 					&& newValues[8]
 					&& newValues[9]
-					&& newValues[10]
-					&& newValues[11]
-					&& newValues[12]		
+					&& newValues[10]		
 					) {
-						showSecondPageProceedButton = true;
-						
+						showSecondPageProceedButton = true;						
 					}
 					$scope.showSecondPageProceedButton = showSecondPageProceedButton;
 					
 				}); 
+				
+				$scope.$watchGroup(['selectedNINumber',
+									'selectedPhone'], function(newValues, oldValues, scope) {
+					var showThirdPageProceedButton = false;
+					if (newValues[0]
+					&& newValues[1]) {
+						showThirdPageProceedButton = true;						
+					}
+					$scope.showThirdPageProceedButton = showThirdPageProceedButton;
+					
+				});			
 				
 				$scope.$watchGroup(['selectedEmail','selectedConfirmedEmail'], function(newValues, oldValues, scope) {
 					var validEmail;
@@ -528,15 +587,18 @@
 					 
 
 					$scope.$watch('taxYears', function(taxYears){
-
+						
 						var selectedTaxYears = false;
+						var countSelectedTaxYears = 0;
 						angular.forEach(taxYears, function(taxYear, index){
 							if (taxYear) {
 								selectedTaxYears = true;
 							}
+							countSelectedTaxYears += taxYear ? 1 : 0;
 						})
 
 						$scope.selectedTaxYears = selectedTaxYears; 
+						$scope.countSelectedTaxYears = countSelectedTaxYears; 
 
 					}, true);
 					
@@ -565,8 +627,8 @@
 			jQuery('#downloadButton').click(function(){
 				jQuery('#taxform').attr('action','download.php');
 				jQuery('#taxform').submit();
-				jQuery('#downloadButton').hide();
-				jQuery('#sendButton').hide();
+				//jQuery('#downloadButton').hide();
+				//jQuery('#sendButton').hide();
 				jQuery('#thank-you-message').show();
 			});
 			
@@ -597,6 +659,22 @@
 				}
 				
 				setTimeout(displayThirdSection(), 1000);
+			});
+			
+			jQuery('#thirdPageProceedButton').click(function(){
+				event.preventDefault();
+				jQuery('#third-page').hide('slow');
+				
+				function displayFourthSection() {
+					jQuery('#fourth-page').show('slow');
+				}
+				
+				jQuery.get( "ref-num-generate.php", function( data ) {
+					jQuery('#generatedReferenceNumber').show();
+					jQuery('#generatedReferenceNumber span').text(data);					
+				});
+				
+				setTimeout(displayFourthSection(), 1000);
 			});
 		});
 	</script>

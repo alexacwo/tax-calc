@@ -3,12 +3,56 @@ require('fpdf.php');
 
 class PDF_HTML extends FPDF
 {
+	
+	function printHeader($name)
+	{
+		$this->Cell(120,10,'POST TO THE ADDRESS BELOW',1);		
+		$this->Cell(40,10,'National insurance number',1, 1);
+		
+		$this->Cell(120);	
+		$this->Cell(40,10,'NX435694F',1, 1);	
+		
+		$this->Cell(120,40,'URGENT - UNIFORM TAX REBATE',1);
+		$this->Cell(40,40,'Claim Reference',1, 1);	
+		
+		
+		$this->Ln(2);
+		$this->Cell(40,10,'Name of Claimant',0);	
+		$this->Cell(120,10, $name, 0);	
+		
+		$this->Ln();
+		
+		$this->Cell(40);	
+		$x = $this->GetX();
+		$y = $this->GetY();
+		$this->SetLineWidth(0.4);
+		$this->Line($x,$y,$x+100,$y);
+		
+		$this->Ln(2);
+	}
+	
+	function printFirstTable($job, $occupation, $deduction) {	
+		$this->SetFontSize(9);
+		$this->Cell(180,8, 'Flat rate expense for laundry / maintenance of protective clothing / tools under EIM32485 or EIM32712 Section 367 ITEPA 2003', 1,1);	
+		
+		$this->Cell(40,8, 'Industry', 1);	
+		$this->Cell(90,8, 'Occupation Type', 1);			
+		$this->Cell(50,8, 'Decuction', 1,1);
+
+		$this->Cell(40,8, $job, 1);	
+		$this->Cell(90,8, $occupation, 1);			
+		$this->Cell(50,8, $deduction, 1,1);			
+		
+		$this->Ln();		
+	}
+
 	var $B=0;
 	var $I=0;
 	var $U=0;
 	var $HREF='';
 	var $ALIGN='';
 
+	
 	function WriteHTML($html)
 	{
 		//HTML parser
@@ -106,5 +150,14 @@ class PDF_HTML extends FPDF
 		$this->SetStyle('U',false);
 		$this->SetTextColor(0);
 	}
+	
+	// Simple table
+	function TwoCellTable ($leftColumn, $rightColumn)
+	{
+		$this->Cell(90,40,$leftColumn,1);
+		$this->Cell(90,40,$rightColumn,1);
+		$this->Ln();
+	}
+
 }
 ?>
